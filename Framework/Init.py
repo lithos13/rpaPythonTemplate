@@ -1,12 +1,15 @@
-from functions_and_classes.context import general
+from functions_and_classes.sys_context import general
+import pandas as pd
 
 def init():
     str_message = ""
     try:
-        # Your code logic here
+        # load variables
+        # init applications
+
         print("Initializing process...")
         print("first run")
-        print(20/0)
+        
         general.bol_systemException= False
         
     except Exception as e:

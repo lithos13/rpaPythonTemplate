@@ -1,4 +1,4 @@
-from functions_and_classes.bussinesException import BusinessException
+from functions_and_classes.sys_bussinesException import BusinessException
 
 
 def process():

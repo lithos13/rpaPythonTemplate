@@ -1,4 +1,4 @@
-from functions_and_classes.context import general
+from functions_and_classes.sys_context import general
 
 def end_process():
     if general.bol_systemException:

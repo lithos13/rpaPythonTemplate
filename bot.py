@@ -43,7 +43,7 @@ from Framework.Init import init
 from Framework.Get_Transaction import get_transaction
 from Framework.Process import process
 from Framework.End_process import end_process
-from functions_and_classes.context import general
+from functions_and_classes.sys_context import general
 
 
 
@@ -82,10 +82,7 @@ def main():
 
     # Implement here your logic...----------------------------------------------------------------------------------------------------------------------------------------
     ...
-    # number of replies
-    int_retry=0
-    int_num_replies = 0
-    
+  
     # Initialize the process returns TRUE or FALSE. TRUE means that a system exception occurred and the process should be stopped.FALSE means that the process should continue.
     init()
 
