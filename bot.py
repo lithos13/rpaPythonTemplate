@@ -85,15 +85,27 @@ def main():
   
     # Initialize the process returns TRUE or FALSE. TRUE means that a system exception occurred and the process should be stopped.FALSE means that the process should continue.
     init()
+    
+    while general.int_numRetry<= general.int_numRetry:
+        # If there is no system exception, the process continues
+        if not general.bol_systemException:
+            get_transaction()  
+        else:       
+            end_process()
+            break  
 
-    # If there is no system exception, the process continues
-    if not general.bol_systemException:
-        get_transaction()
-        process() 
-        end_process()              
-            
-    else:       
-       end_process()  
+        # If there is transaction data, the process continues
+        while general.row_transactionItem is not None:
+            process()
+            if not general.bol_systemException:
+                general.int_transactionNumber += 1
+                get_transaction() 
+            else:
+                general.int_numRetry += 1
+                # close all
+                break
+        # end process if there is no transaction data        
+        end_process()   
     #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
