@@ -1,4 +1,4 @@
-from functions_and_classes.sys_context import general
+from Functions_and_classes.sys_context import general
 
 def get_transaction():
     if general.df_transactionData.empty:

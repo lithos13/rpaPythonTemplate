@@ -43,7 +43,7 @@ from Framework.Init import init
 from Framework.Get_Transaction import get_transaction
 from Framework.Process import process
 from Framework.End_process import end_process
-from functions_and_classes.sys_context import general
+from Functions_and_classes.sys_context import general
 
 
 
