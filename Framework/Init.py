@@ -5,6 +5,7 @@ def init():
     str_message = ""
     try:
         # load variables
+        # kill all processes
         # init applications
 
         print("Initializing process...")

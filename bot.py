@@ -105,7 +105,11 @@ def main():
                 # close all
                 break
         # end process if there is no transaction data        
-        end_process()   
+        end_process()
+        break  
+    # end process to finish the process completely    
+    end_process()      
+    
     #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
