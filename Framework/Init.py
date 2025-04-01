@@ -1,6 +1,6 @@
 from Functions_and_classes.sys_context import general
 from Framework.closeApplications import closeApp
-from Framework.InitApplications import initApp
+
 import pandas as pd
 
 def init():
@@ -10,7 +10,7 @@ def init():
            print("first run")
            # load variables
            closeApp()
-           initApp()          
+           # Init applications       
            general.bol_systemException= False
         
     except Exception as e:
