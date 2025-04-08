@@ -20,20 +20,10 @@ To fix this, you can either:
 Please refer to the documentation for more information at
 https://documentation.botcity.dev/tutorials/python-automations/desktop/
 """
-
-
 # Import for the Desktop Bot
 from botcity.core import DesktopBot
-
-# Import for the Web Bot
-from botcity.web import WebBot, Browser, By
-
 # Import for integration with BotCity Maestro SDK
 from botcity.maestro import *
-
-# Import webdriver_manager to automatically download the WebDriver binary
-from webdriver_manager.chrome import ChromeDriverManager
-
 
 # Disable errors if we are not connected to Maestro
 BotMaestroSDK.RAISE_NOT_CONNECTED = False
@@ -44,7 +34,6 @@ from Framework.Get_Transaction import get_transaction
 from Framework.Process import process
 from Framework.End_process import end_process
 from Functions_and_classes.sys_context import general
-
 
 
 def main():
@@ -59,40 +48,17 @@ def main():
 
     desktop_bot = DesktopBot()
 
-    # Execute operations with the DesktopBot as desired
-    # desktop_bot.control_a()
-    # desktop_bot.control_c()
-    # value = desktop_bot.get_clipboard()
-
-    webbot = WebBot()
-
-    # Configure whether or not to run on headless mode
-    webbot.headless = False
-
-    # Uncomment to change the default Browser to Firefox
-    # webbot.browser = Browser.FIREFOX
-
-    # Uncomment to set the WebDriver path
-    # webbot.driver_path = "<path to your WebDriver binary>"
-    webbot.driver_path = ChromeDriverManager().install()
-
-    # Opens the BotCity website.
-    #webbot.browse("https://www.botcity.dev")
-
-
     # Implement here your logic...----------------------------------------------------------------------------------------------------------------------------------------
-    ...
-  
+    
     # Initialize the process returns TRUE or FALSE. TRUE means that a system exception occurred and the process should be stopped.FALSE means that the process should continue.
     init()
+    if general.bol_systemException:
+        end_process()
+        return
     
-    while general.int_numRetry<= general.int_numRetry:
-        # If there is no system exception, the process continues
-        if not general.bol_systemException:
-            get_transaction()  
-        else:       
-            end_process()
-            break  
+    while general.int_numRetry<= general.int_totalRetry:
+        # Get transaction data from the DataFrame
+        get_transaction()         
 
         # If there is transaction data, the process continues
         while general.row_transactionItem is not None:
@@ -102,24 +68,20 @@ def main():
                 get_transaction() 
             else:
                 general.int_numRetry += 1
+                print(f"Retry number: {general.int_numRetry}")
                 # close all
                 break
-        # end process if there is no transaction data        
-        end_process()
-        break  
+        # end process if there is no transaction data
+        if general.row_transactionItem is None:
+            print("No transaction data available.")
+            # close all
+            end_process()
+            break        
     # end process to finish the process completely    
     end_process()      
     
     #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-    # Wait 3 seconds before closing
-    webbot.wait(3000)
-
-    # Finish and clean up the Web Browser
-    # You MUST invoke the stop_browser to avoid
-    # leaving instances of the webdriver open
-    #webbot.stop_browser()
+   
 
     # Uncomment to mark this task as finished on BotMaestro
     # maestro.finish_task(
