@@ -1,7 +1,7 @@
 from Functions_and_classes.sys_context import general
 from Framework.closeApplications import closeApp
-
 import pandas as pd
+from decouple import config
 
 def init():
     str_message = ""
@@ -14,7 +14,7 @@ def init():
            general.bol_systemException= False
         
     except Exception as e:
-        print(f"An error occurred: {e}")        
+        print(f"An error occurred: {e} - {general.str_messageError}")         
         general.bol_systemException= True
     
         

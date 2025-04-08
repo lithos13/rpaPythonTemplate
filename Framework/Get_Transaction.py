@@ -7,7 +7,7 @@ def get_transaction():
             general.row_transactionItem = None
 
         else:        
-            if general.int_transactionNumber<=len(general.df_transactionData):
+            if general.int_transactionNumber<len(general.df_transactionData):
                 print(f"Transaction number: {general.int_transactionNumber}")
                 general.row_transactionItem = general.df_transactionData.iloc[general.int_transactionNumber]
             else:
