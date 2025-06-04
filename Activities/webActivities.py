@@ -36,7 +36,7 @@ def_options.add_argument("--disable-dev-shm-usage")
 webbot             = WebBot()
 # assigning the default options to the webbot instance
 webbot.options     = def_options
-print(f"WebBot options: {profile_path}")
+print(f"WebBot options: {profile_full_path}")
 # Configure whether or not to run on headless mode
 webbot.driver_path = ChromeDriverManager().install()
 
@@ -55,16 +55,32 @@ def open_browser(url):
    #webbot.stop_browser()    
    return webbot
 
-# Helper function to find and interact with elements
-def find_and_interact(selector, by, action, value=None, error_message="Element not found"):
-    element = webbot.find_element(selector=selector, by=by)   
-    if element:
-       webbot.wait_for_element_visibility(element=element, visible=True, waiting_time=100000)
-       if action == "send_keys":
-          element.send_keys(value)
-       elif action == "click":
+       
+def wait_and_click(selector, by, wait_time=1000):
+    try:
+        element = webbot.find_element(selector=selector, by=by)
+        if element:
+            webbot.wait_for_element_visibility(element=element, visible=True, waiting_time=100000)
+            webbot.wait(wait_time)
             element.click()
-       else:
-           raise Exception(error_message)
+            return element
+        else:
+            return None
+    except:
+        return None
+
+def wait_and_sendKeys(selector, by, wait_time=2000, value=None):
+    try:
+        element = webbot.find_element(selector=selector, by=by)
+        if element:
+            webbot.wait_for_element_visibility(element=element, visible=True, waiting_time=100000)
+            webbot.wait(wait_time)
+            element.clear()    
+            element.send_keys(value)
+            return element
+        else:
+            return None
+    except:
+        return None
 
      
