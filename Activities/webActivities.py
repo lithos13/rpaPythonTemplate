@@ -5,15 +5,31 @@ from webdriver_manager.chrome import ChromeDriverManager
 # Import default_options to set the options for the WebDriver
 from botcity.web.browsers.chrome import default_options
 from decouple import config
-
+import os
 
 # This is the path to the Chrome profile you want to use-----
-profile_path        = config('PROFILE_PATH')  
+# you should go to the profile path in google chrome, copy it and create another folder in C:\BotCity\[project folder]\profile_chrome
+profile_full_path = config('PROFILE_PATH')  
+
+if not isinstance(profile_full_path, str):
+    raise TypeError(f"PROFILE_PATH debe ser una cadena de texto, pero se obtuvo: {type(profile_full_path)}")
+profile_directory_name = os.path.basename(profile_full_path)
+user_data_dir_path = os.path.dirname(profile_full_path) 
+
+print(f"Ruta completa del perfil: {profile_full_path}")
+print(f"Directorio de datos de usuario (user_data_dir): {user_data_dir_path}")
+print(f"Nombre del directorio del perfil (profile-directory): {profile_directory_name}")
 
 def_options = default_options(
-      headless       =False,
-      user_data_dir  =profile_path      
-    ) 
+    headless=False,
+    user_data_dir=user_data_dir_path  # Correcto: la ruta a "User Data"
+)
+
+# Agregar los argumentos
+def_options.add_argument(f"--profile-directory={profile_directory_name}")
+def_options.add_argument('--disable-gpu')
+def_options.add_argument("--no-sandbox")
+def_options.add_argument("--disable-dev-shm-usage")
 
 
 # Initialize the WebBot instance
